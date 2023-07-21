@@ -32,7 +32,7 @@ export type IReview = {
 
 export type IBook = {
     title: string;
-    description: string;
+    description?: string;
     image: string;
     reviews: IReview[];
     author: string;
