@@ -4,7 +4,7 @@ import { IBook } from "../books/book.interface";
 export type IUser = {
     email: string;
     password: string;
-    wishList: IBook[];
+    wishList?: IBook[];
     _id: mongoose.Schema.Types.ObjectId;
 };
 
