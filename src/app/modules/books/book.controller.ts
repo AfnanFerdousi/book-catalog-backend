@@ -28,7 +28,18 @@ const getAllBooks = catchAsync(async (req, res, next) => {
     
 })
 
+const postBook = catchAsync(async (req, res, next) => {
+    const book = await bookService.postBookInDB(req.body);
+    sendResponse<IBook>(res, {
+        success: true,
+        statusCode: httpStatus.CREATED,
+        data: book,
+        message: "successfully created book 😎"
+    })
+})
+
 
 export default {
-    getAllBooks
+    getAllBooks,
+    postBook
 }

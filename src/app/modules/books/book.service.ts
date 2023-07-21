@@ -57,6 +57,12 @@ const getAllBooksFromDB = async (
     };
 };
 
+const postBookInDB = async (book: IBook): Promise<IBook> => {
+    const result = await Books.create(book);
+    return result;
+}
+
 export default {
-    getAllBooksFromDB
+    getAllBooksFromDB,
+    postBookInDB
 }

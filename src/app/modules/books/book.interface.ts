@@ -34,7 +34,7 @@ export type IBook = {
     title: string;
     description?: string;
     image: string;
-    reviews: IReview[];
+    reviews?: IReview[];
     author: string;
     publishedAt: string;
     genre: IGenre;
