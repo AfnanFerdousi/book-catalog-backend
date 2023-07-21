@@ -33,6 +33,7 @@
     "jsonwebtoken": "^9.0.1",
     "lint-staged": "^13.2.3",
     "mongoose": "^7.4.0",
+    "ts-node-dev": "^2.0.0",
     "vercel": "^31.0.4",
     "zod": "^3.21.4"
   }
