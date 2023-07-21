@@ -58,9 +58,20 @@ const updateBook = catchAsync(async (req, res, next) => {
     })
 })
 
+const deleteBook = catchAsync(async (req, res, next) => {
+    const book = await bookService.deleteBookFromDB(req.params.id);
+    sendResponse<IBook>(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        data: book,
+        message: "successfully deleted book 😎"
+    })
+})
+
 export default {
     getAllBooks,
     postBook,
     getSingleBook,
-    updateBook
+    updateBook,
+    deleteBook
 }

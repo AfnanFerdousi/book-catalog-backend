@@ -71,7 +71,6 @@ const getSingleBookFromDB = async (_id: string): Promise<IBook | null> => {
     return result;
 };
 
-
 const updateBookInDB = async (
     id: string,
     payload: Partial<IBook>
@@ -87,9 +86,19 @@ const updateBookInDB = async (
     }).exec();
     return result;
 };
+
+const deleteBookFromDB = async (_id: string): Promise<IBook | null> => {
+    const isExist = await Books.findById(_id).exec();
+    if (!isExist) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Book not found !");
+    }
+    const result = await Books.findOneAndDelete({ _id: _id }).exec();
+    return result;
+}
 export default {
     getAllBooksFromDB,
     postBookInDB,
     getSingleBookFromDB,
-    updateBookInDB
+    updateBookInDB,
+    deleteBookFromDB
 }
