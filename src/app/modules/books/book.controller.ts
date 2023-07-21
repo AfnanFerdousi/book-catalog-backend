@@ -38,8 +38,19 @@ const postBook = catchAsync(async (req, res, next) => {
     })
 })
 
+const getSingleBook = catchAsync(async (req, res, next) => {
+    const book = await bookService.getSingleBookFromDB(req.params.id);
+    sendResponse<IBook>(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        data: book,
+        message: "successfully retrieved book 😎"
+    })
+})
+
 
 export default {
     getAllBooks,
-    postBook
+    postBook,
+    getSingleBook
 }
