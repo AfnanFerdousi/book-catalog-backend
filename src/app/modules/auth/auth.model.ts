@@ -44,6 +44,8 @@ userSchema.statics.isPasswordMatched = async function (
     return await bcrypt.compare(givenPassword, savedPassword);
 };
 
+
+
 userSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(
         this.password,
