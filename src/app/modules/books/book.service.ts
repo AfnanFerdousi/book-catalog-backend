@@ -72,7 +72,7 @@ const getSingleBookFromDB = async (_id: string): Promise<IBook | null> => {
 };
 
 
-const updateBookService = async (
+const updateBookInDB = async (
     id: string,
     payload: Partial<IBook>
 ): Promise<IBook | null> => {
@@ -91,5 +91,5 @@ export default {
     getAllBooksFromDB,
     postBookInDB,
     getSingleBookFromDB,
-    updateBookService
+    updateBookInDB
 }
