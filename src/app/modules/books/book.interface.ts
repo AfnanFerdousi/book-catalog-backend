@@ -25,9 +25,8 @@ export type IGenre =
 
 
 export type IReview = {
-    bookId: number;
-    user: mongoose.Schema.Types.ObjectId;
     comment: string;
+    user: mongoose.Schema.Types.ObjectId;
 };
 
 export type IBook = {

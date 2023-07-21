@@ -3,7 +3,7 @@ import paginationHelpers from "../../../helpers/paginationHelpers";
 import IGenericResponse from "../../../interfaces/genericResponse";
 import IPaginationOptions from "../../../interfaces/pagination";
 import { bookFilterableFields } from "./book.constant";
-import { IBook, IBookFilters } from "./book.interface";
+import { IBook, IBookFilters, IReview } from "./book.interface";
 import Books from "./book.model";
 import ApiError from "../../../errors/ApiError";
 import httpStatus from "http-status";
@@ -95,10 +95,33 @@ const deleteBookFromDB = async (_id: string): Promise<IBook | null> => {
     const result = await Books.findOneAndDelete({ _id: _id }).exec();
     return result;
 }
+
+const postReviewInDB = async (
+    _id: string,
+    review: IReview
+): Promise<IBook | null> => {
+    console.log("id------", _id)
+    const isExist = await Books.findById(_id).exec();
+    if (!isExist) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Book not found !");
+    }
+    const result = await Books.findOneAndUpdate(
+        { _id },
+        {
+            $push: { reviews: review },
+        },
+        {
+            new: true,
+        }
+    ).exec();
+    return result;
+    
+}
 export default {
     getAllBooksFromDB,
     postBookInDB,
     getSingleBookFromDB,
     updateBookInDB,
-    deleteBookFromDB
+    deleteBookFromDB,
+    postReviewInDB
 }

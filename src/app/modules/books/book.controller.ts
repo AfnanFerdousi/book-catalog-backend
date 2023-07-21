@@ -68,10 +68,21 @@ const deleteBook = catchAsync(async (req, res, next) => {
     })
 })
 
+const postReview = catchAsync(async (req, res, next) => {
+    const review = await bookService.postReviewInDB(req.params.id,req.body);
+    sendResponse<IBook>(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        data: review,
+        message: "successfully posted review 😎"
+    })
+})
+
 export default {
     getAllBooks,
     postBook,
     getSingleBook,
     updateBook,
-    deleteBook
+    deleteBook,
+    postReview
 }
