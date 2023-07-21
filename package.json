@@ -4,9 +4,36 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "ts-node-dev --respawn --rs --transpile-only src/server.ts",
+    "lint:check": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+    "lint:fixed": "eslint . --fix",
+    "prettier:check": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "prettier:fixed": "prettier --write .",
+    "lint_prettier:check": "npm run lint:check && npm run prettier:check",
+    "lint": "eslint --ext .js,.ts .",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "lint-staged": {
+    "src/**/*.ts": "npm run lint_prettier:check",
+    "*.{js,ts}": "eslint --cache --fix"
+  },
+  "dependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/jsonwebtoken": "^9.0.2",
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "http-status": "^1.6.2",
+    "jsonwebtoken": "^9.0.1",
+    "lint-staged": "^13.2.3",
+    "mongoose": "^7.4.0",
+    "vercel": "^31.0.4",
+    "zod": "^3.21.4"
+  }
 }
