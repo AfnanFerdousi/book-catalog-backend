@@ -76,7 +76,6 @@ const updateBookInDB = async (
     payload: Partial<IBook>
 ): Promise<IBook | null> => {
     const isExist = await Books.findById(id).exec();
-    console.log(isExist);
     if (!isExist) {
         throw new ApiError(httpStatus.NOT_FOUND, "Book not found !");
     }
@@ -100,7 +99,6 @@ const postReviewInDB = async (
     _id: string,
     review: IReview
 ): Promise<IBook | null> => {
-    console.log("id------", _id)
     const isExist = await Books.findById(_id).exec();
     if (!isExist) {
         throw new ApiError(httpStatus.NOT_FOUND, "Book not found !");

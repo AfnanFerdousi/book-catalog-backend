@@ -63,9 +63,7 @@ const refreshTokenService = async (
     }
 
     const { _id } = verifiedToken;
-    console.log(_id);
     const user = await User.isUserExist(_id);
-    console.log(user);
     if (!user) {
         throw new ApiError(httpStatus.NOT_FOUND, "User does not exist 🙄");
     }
@@ -85,12 +83,10 @@ const addToWishListInDB = async (
     _id: string,
     book: IBook
 ) => {
-    console.log("id----", _id)
    
     const bookId = book._id;
     const isExist = await User.findById(_id).exec();
     const isBookExist = await Books.findById(bookId).exec();
-     console.log("bookId-----", bookId);
   if (!isExist) {
       throw new ApiError(httpStatus.NOT_FOUND, "User not found 🙁");
     }
@@ -126,6 +122,20 @@ const getWishListFromDB = async (_id: string): Promise<IUser | null> => {
 
     return result; // Return the entire IUser object instead of just the wishList
 };
+const removeFromWishListInDB = async (_id: string, bookId: string) => {
+    console.log("bookid--------",bookId)
+    const result = await User.findOneAndUpdate(
+        { _id },
+        {
+            $pull: { wishList: _id },
+        },
+        {
+            new: true,
+        }
+    ).exec();
+    // console.log("result----------", result);
+    return result;
+};
 
 export default {
     createUserInDB,
@@ -133,5 +143,6 @@ export default {
     refreshTokenService,
     addToWishListInDB,
     getWishListFromDB,
-    getSingleUserFromDB
+    getSingleUserFromDB,
+    removeFromWishListInDB,
 };

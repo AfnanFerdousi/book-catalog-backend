@@ -78,7 +78,6 @@ const getSingleUser = catchAsync(async (req, res, next) => {
 })
 const getWishList = catchAsync(async (req, res, next) => {
     const userWishList = await authService.getWishListFromDB(req.params.id);
-    console.log(userWishList)
     if (userWishList === null) {
         // Handle the case where the user is not found
         sendResponse<IBook[]>(res, {
@@ -106,6 +105,15 @@ const getWishList = catchAsync(async (req, res, next) => {
     }
 });
 
+const removeWishList = catchAsync(async (req, res, next) => {
+    const user = await authService.removeFromWishListInDB(req.params.id, req.body.bookId);
+    sendResponse<IUser>(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        data: user,
+        message: "successfully removed from wishlist 😎",
+    });
+})
 
 export default {
     createUser,
@@ -113,5 +121,6 @@ export default {
     refreshToken,
     addToWishList,
     getWishList,
-    getSingleUser
+    getSingleUser,
+    removeWishList
 };
