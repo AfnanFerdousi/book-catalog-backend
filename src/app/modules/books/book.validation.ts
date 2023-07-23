@@ -15,7 +15,7 @@ export const createBookZodValidationSchema = z.object({
         publishedAt: z.string({
             required_error: "Published year is required",
         }),
-        img: z
+        image: z
             .string({
                 required_error: "Image is required",
             })
@@ -29,7 +29,7 @@ export const updateBookZodValidationSchema = z.object({
         author: z.string().optional(),
         genre: z.enum([...bookGenres] as [string, ...string[]]).optional(),
         publishedAt: z.string().optional(),
-        img: z.string().url().optional(),
+        image: z.string().url().optional(),
     }),
 });
 export const addReviewZodValidationSchema = z.object({

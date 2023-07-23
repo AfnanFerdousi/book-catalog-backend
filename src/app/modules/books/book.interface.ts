@@ -25,11 +25,12 @@ export type IGenre =
 
 
 export type IReview = {
-    comment: string;
+    review: string;
     user: mongoose.Schema.Types.ObjectId;
 };
 
 export type IBook = {
+    _id: mongoose.Schema.Types.ObjectId;
     title: string;
     description?: string;
     image: string;

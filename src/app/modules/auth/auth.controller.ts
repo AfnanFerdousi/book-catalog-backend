@@ -56,7 +56,8 @@ const refreshToken = catchAsync(async (req, res) => {
 });
 
 const addToWishList = catchAsync(async (req, res, next) => {
-    const user = await authService.addToWishListInDB(req.params.id, req.body);
+    const user = await authService.addToWishListInDB(req.params.id, req.body.book);
+  
     sendResponse<IUser>(res, {
         success: true,
         statusCode: httpStatus.OK,
@@ -64,7 +65,17 @@ const addToWishList = catchAsync(async (req, res, next) => {
         message: "successfully added to wishlist 😎",
     });
 });
-
+// 64bd47e631be8192ad06a99a
+// 64bd47e631be8192ad06a99a
+const getSingleUser = catchAsync(async (req, res, next) => {
+    const user = await authService.getSingleUserFromDB(req.params?.id);
+    sendResponse<IUser>(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        data: user,
+        message: "successfully retrieved user 😎",
+    });
+})
 const getWishList = catchAsync(async (req, res, next) => {
     const userWishList = await authService.getWishListFromDB(req.params.id);
     console.log(userWishList)
@@ -102,4 +113,5 @@ export default {
     refreshToken,
     addToWishList,
     getWishList,
+    getSingleUser
 };

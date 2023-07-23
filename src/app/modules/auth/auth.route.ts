@@ -10,5 +10,6 @@ router.post("/login", validateRequest(loginZodValidationSchema), authController.
 router.post("/refresh", validateRequest(refreshZodValidationSchema),authController.refreshToken);
 router.patch("/add-to-wish/:id", authController.addToWishList);
 router.get("/wishlist/:id", authController.getWishList);
+router.get("/user/:id", authController.getSingleUser);
 
 export default router;
