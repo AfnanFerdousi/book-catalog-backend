@@ -25,19 +25,12 @@ const userSchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
-    wishList: {
-        type: [
-            {
-                bookId: {
-                    type: mongoose_1.default.Schema.Types.ObjectId,
-                    ref: "Books",
-                },
-                bookName: {
-                    type: String,
-                },
-            },
-        ],
-    },
+    wishList: [
+        {
+            type: mongoose_1.default.Schema.Types.ObjectId,
+            ref: "Books",
+        },
+    ],
 }, { timestamps: true, versionKey: false });
 userSchema.statics.isUserExist = function (_id) {
     return __awaiter(this, void 0, void 0, function* () {

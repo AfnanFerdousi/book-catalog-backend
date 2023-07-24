@@ -71,7 +71,7 @@ const addToWishListInDB = (_id, book) => __awaiter(void 0, void 0, void 0, funct
         throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Book not found 🙁");
     }
     const result = yield auth_model_1.default.findOneAndUpdate({ _id }, {
-        $push: { wishList: book },
+        $push: { wishList: bookId },
     }, {
         new: true,
     }).exec();
@@ -86,7 +86,7 @@ const getSingleUserFromDB = (email) => __awaiter(void 0, void 0, void 0, functio
     return result;
 });
 const getWishListFromDB = (_id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield auth_model_1.default.findById(_id).exec();
+    const result = yield auth_model_1.default.findById(_id).select("wishList").populate("wishList").exec();
     if (!result) {
         // If the user is not found, return null
         return null;
@@ -96,7 +96,7 @@ const getWishListFromDB = (_id) => __awaiter(void 0, void 0, void 0, function* (
 const removeFromWishListInDB = (_id, bookId) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("bookid--------", bookId);
     const result = yield auth_model_1.default.findOneAndUpdate({ _id }, {
-        $pull: { wishList: _id },
+        $pull: { wishList: bookId },
     }, {
         new: true,
     }).exec();

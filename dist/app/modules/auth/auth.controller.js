@@ -79,8 +79,6 @@ const addToWishList = (0, catchAsync_1.default)((req, res, next) => __awaiter(vo
         message: "successfully added to wishlist 😎",
     });
 }));
-// 64bd47e631be8192ad06a99a
-// 64bd47e631be8192ad06a99a
 const getSingleUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const user = yield auth_service_1.default.getSingleUserFromDB((_a = req.params) === null || _a === void 0 ? void 0 : _a.id);
@@ -93,7 +91,7 @@ const getSingleUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(vo
 }));
 const getWishList = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const userWishList = yield auth_service_1.default.getWishListFromDB(req.params.id);
-    if (!userWishList) {
+    if (userWishList === null) {
         (0, sendResponse_1.default)(res, {
             success: true,
             statusCode: http_status_1.default.OK,
@@ -102,11 +100,13 @@ const getWishList = (0, catchAsync_1.default)((req, res, next) => __awaiter(void
         });
     }
     else {
-        const wishList = userWishList.wishList; // Assuming wishList is an array of IBook objects in IUser interface
+        // Assuming wishList is an array of IBook objects in IUser interface
+        // Convert userWishList to IBook[] using type assertion
+        const wishListData = userWishList;
         (0, sendResponse_1.default)(res, {
             success: true,
             statusCode: http_status_1.default.OK,
-            data: wishList,
+            data: wishListData,
             message: "Successfully retrieved wishlist 😎",
         });
     }
@@ -127,5 +127,5 @@ exports.default = {
     addToWishList,
     getWishList,
     getSingleUser,
-    removeWishList
+    removeWishList,
 };

@@ -11,10 +11,5 @@
             "src": "/(.*)",
             "dest": "dist/server.js"
         }
-    ],
-    "projectSettings": {
-        "name": "book-catalog",
-        "region": "asia-south1",
-        "runtime": "node@14"
-    }
+    ]
 }
