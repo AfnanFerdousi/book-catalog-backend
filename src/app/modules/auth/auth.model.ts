@@ -14,19 +14,12 @@ const userSchema = new mongoose.Schema<IUser, UserModel>(
             type: String,
             required: true,
         },
-        wishList: {
-            type: [
-                {
-                    bookId: {
-                        type: mongoose.Schema.Types.ObjectId,
-                        ref: "Books",
-                    },
-                    bookName: {
-                        type: String,
-                    },
-                },
-            ],
-        },
+        wishList: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Books",
+            },
+        ],
     },
     { timestamps: true, versionKey: false }
 );
@@ -43,8 +36,6 @@ userSchema.statics.isPasswordMatched = async function (
 ): Promise<boolean> {
     return await bcrypt.compare(givenPassword, savedPassword);
 };
-
-
 
 userSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(

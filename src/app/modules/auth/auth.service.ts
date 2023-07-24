@@ -96,7 +96,7 @@ const addToWishListInDB = async (
   const result = await User.findOneAndUpdate(
       { _id },
       {
-          $push: { wishList: book },
+          $push: { wishList: bookId },
       },
       {
           new: true,
@@ -112,9 +112,8 @@ const getSingleUserFromDB = async (email: string): Promise<IUser | null> => {
     }
     return result;
 }
-const getWishListFromDB = async (_id: string): Promise<IUser | null> => {
-    const result = await User.findById(_id).exec();
-
+const getWishListFromDB = async (_id: string) => {
+    const result = await User.findById(_id).select("wishList").populate("wishList").exec();
     if (!result) {
         // If the user is not found, return null
         return null;
@@ -127,7 +126,7 @@ const removeFromWishListInDB = async (_id: string, bookId: string) => {
     const result = await User.findOneAndUpdate(
         { _id },
         {
-            $pull: { wishList: _id },
+            $pull: { wishList: bookId },
         },
         {
             new: true,

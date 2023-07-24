@@ -65,8 +65,6 @@ const addToWishList = catchAsync(async (req, res, next) => {
         message: "successfully added to wishlist 😎",
     });
 });
-// 64bd47e631be8192ad06a99a
-// 64bd47e631be8192ad06a99a
 const getSingleUser = catchAsync(async (req, res, next) => {
     const user = await authService.getSingleUserFromDB(req.params?.id);
     sendResponse<IUser>(res, {
@@ -78,24 +76,16 @@ const getSingleUser = catchAsync(async (req, res, next) => {
 })
 const getWishList = catchAsync(async (req, res, next) => {
     const userWishList = await authService.getWishListFromDB(req.params.id);
-    if (userWishList === null) {
-        // Handle the case where the user is not found
+
+    if (!userWishList) {
         sendResponse<IBook[]>(res, {
             success: true,
             statusCode: httpStatus.OK,
-            data: [],
-            message: "User not found or has an empty wishlist.",
-        });
-    } else if (!userWishList) {
-        // Handle the case where the user has an empty wishlist
-        sendResponse<IBook[]>(res, {
-            success: true,
-            statusCode: httpStatus.OK,
-            data: [],
+            data: [], // Return an empty array if the user has an empty wishlist
             message: "User has an empty wishlist.",
         });
-    } else {
-        // User has items in the wishlist
+    } else { // Assuming wishList is an array of IBook objects in IUser interface
+
         sendResponse<IBook[]>(res, {
             success: true,
             statusCode: httpStatus.OK,
