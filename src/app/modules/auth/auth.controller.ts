@@ -56,8 +56,11 @@ const refreshToken = catchAsync(async (req, res) => {
 });
 
 const addToWishList = catchAsync(async (req, res, next) => {
-    const user = await authService.addToWishListInDB(req.params.id, req.body.book);
-  
+    const user = await authService.addToWishListInDB(
+        req.params.id,
+        req.body.book
+    );
+
     sendResponse<IUser>(res, {
         success: true,
         statusCode: httpStatus.OK,
@@ -73,37 +76,45 @@ const getSingleUser = catchAsync(async (req, res, next) => {
         data: user,
         message: "successfully retrieved user 😎",
     });
-})
+});
 const getWishList = catchAsync(async (req, res, next) => {
     const userWishList = await authService.getWishListFromDB(req.params.id);
 
-    if (!userWishList) {
+    if (userWishList === null) {
         sendResponse<IBook[]>(res, {
             success: true,
             statusCode: httpStatus.OK,
             data: [], // Return an empty array if the user has an empty wishlist
             message: "User has an empty wishlist.",
         });
-    } else { // Assuming wishList is an array of IBook objects in IUser interface
+    } else {
+        // Assuming wishList is an array of IBook objects in IUser interface
+
+        // Convert userWishList to IBook[] using type assertion
+        const wishListData = userWishList as unknown as IBook[];
 
         sendResponse<IBook[]>(res, {
             success: true,
             statusCode: httpStatus.OK,
-            data: userWishList,
+            data: wishListData,
             message: "Successfully retrieved wishlist 😎",
         });
     }
 });
 
+
 const removeWishList = catchAsync(async (req, res, next) => {
-    const user = await authService.removeFromWishListInDB(req.params.id, req.body.bookId);
+    const user = await authService.removeFromWishListInDB(
+        req.params.id,
+        req.body.bookId
+    );
     sendResponse<IUser>(res, {
         success: true,
         statusCode: httpStatus.OK,
         data: user,
         message: "successfully removed from wishlist 😎",
     });
-})
+});
 
 export default {
     createUser,
@@ -112,5 +123,5 @@ export default {
     addToWishList,
     getWishList,
     getSingleUser,
-    removeWishList
+    removeWishList,
 };
